@@ -15,7 +15,7 @@ function Romega(n, sigma, omega)
     Dinv = spdiagm(0 => 1 ./ diag(H))
     return I - omega * Dinv * H
 end
-println(pwd())
+
 function simple_restrict_matrix(n)
     if n % 2 != 0
         error("restrict matrix needs n even")
