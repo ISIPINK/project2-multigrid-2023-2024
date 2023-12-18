@@ -23,14 +23,14 @@ function linspacecs(a, b, n, ecsangle)
     h = zcenter[2] - zcenter[1]
     zright = h * (1:(m-1)) * (1 + 1im * tan(ecsangle))
     zleft = reverse(zright)
-    z = [a - zleft; zcenter; b + zright]
+    z = [a .- zleft; zcenter; b .+ zright]
     return z, m
 end
 
 
 let
     using Plots
-    z, m = linspacecs(0, 10, 100, π / 4)
+    z, m = linspacecs(0, 1, 100, π / 6)
     p = plot(real(z), imag(z), title="ECS grid", label="grid points", seriestype=:scatter)
     display(p)
 end
