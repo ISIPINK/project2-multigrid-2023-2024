@@ -1,7 +1,6 @@
 using Plots
-
 include("constructions1D.jl")
-
+include("grid_constructions1D.jl")
 
 
 begin
