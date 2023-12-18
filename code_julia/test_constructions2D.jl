@@ -10,7 +10,7 @@ begin
     grid_points = vcat(range(-1, -1 / ngrid, length=2 * ngrid), range(0, 1, length=ngrid))
     grid_points = grid_points[2:end-1]
     H = helmholtz2D(n, σ)
-    sigmas = σ * ones((length(grid_points) - 2)^2)
+    sigmas = σ * ones((length(grid_points))^2)
     Hgrid = helmholtz2D(grid_points, sigmas)
     R = simple_restrict_matrix2D(n)
     Rgrid = restrict_matrix2D(grid_points)

@@ -16,8 +16,8 @@ Construct a 2D Helmholtz operator using a given grid and wavenumbers.
 """
 function helmholtz2D(grid::AbstractArray, σ::AbstractArray)
     A_1D = Poisson1D(grid)
-    k = length(grid) - 2
-    A_2D = kron(sparse(I, k, k), A_1D) .+ kron(A_1D, sparse(I, k, k))
+    n = length(grid) + 1
+    A_2D = kron(sparse(I, n - 1, n - 1), A_1D) .+ kron(A_1D, sparse(I, n - 1, n - 1))
     return A_2D .+ σ
 end
 
