@@ -36,16 +36,3 @@ function restrict_matrix(finegrid::AbstractArray)
     R = transpose(P)
     return 0.5 * R
 end
-
-function simple_restrict_matrix(grid::AbstractArray)
-    if n % 2 != 0
-        error("restrict matrix needs n even")
-    end
-    R = spzeros(n ÷ 2 - 1, n - 1)
-    row0 = [1, 2, 1] / 4
-    # need to check indexing
-    for i in 1:size(R, 1)
-        R[i, 2*i-1:2*i+1] = row0
-    end
-    return R
-end
