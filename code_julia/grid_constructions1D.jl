@@ -2,6 +2,7 @@ using SparseArrays, LinearAlgebra
 
 function Poisson1D(grid::AbstractArray)
     h = diff(grid)
+    h = [h[1]; h; h[end]]
     hm = @view h[1:end-1]
     hp = @view h[2:end]
     h_avg = (hm .+ hp) ./ 2
@@ -21,11 +22,11 @@ function interpolate_matrix(finegrid::AbstractArray)
     for j in 1:n-1
         hm = h[j]
         hp = h[j+1]
-        h_avg = hm + hp
+        hsum = hm + hp
 
-        P[2*j-1, j] = hm / h_avg
+        P[2*j-1, j] = hm / hsum
         P[2*j, j] = 1
-        P[2*j+1, j] = hp / h_avg
+        P[2*j+1, j] = hp / hsum
     end
 
     return P

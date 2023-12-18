@@ -20,3 +20,15 @@ function helmholtz2D(grid::AbstractArray, σ::AbstractArray)
     A_2D = kron(sparse(I, k, k), A_1D) .+ kron(A_1D, sparse(I, k, k))
     return A_2D .+ σ
 end
+
+
+function restrict_matrix2D(finegrid::AbstractArray)
+    R_1D = restrict_matrix(finegrid)
+    return kron(R_1D, R_1D)
+end
+
+function interpolate_matrix2D(finegrid::AbstractArray)
+    P_1D = interpolate_matrix(finegrid)
+    return kron(P_1D, P_1D)
+end
+

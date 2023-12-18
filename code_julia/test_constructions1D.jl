@@ -41,6 +41,7 @@ end
 begin
     num_points = 10^1
     grid_points = vcat(range(-1, -1 / num_points, length=2 * num_points), range(0, 1, length=num_points))
+    grid_points = grid_points[2:end-1]
     f(x) = sin((x + 1) * pi)
     d2f(x) = -pi^2 * sin((x + 1) * pi)
     function_values = f.(grid_points)
@@ -50,8 +51,8 @@ begin
     plot!(grid_points, second_derivative_values, label="second_derivative_values")
 
     poisson_matrix = Poisson1D(grid_points)
-    approx_second_derivative_values = poisson_matrix * function_values[2:end-1]
-    plot!(grid_points[2:end-1], approx_second_derivative_values, label="approx_second_derivative_values")
+    approx_second_derivative_values = poisson_matrix * function_values
+    plot!(grid_points, approx_second_derivative_values, label="approx_second_derivative_values")
     # println(approx_second_derivative_values)
     # plot(diff(grid_points))
     # heatmap(poisson_matrix, color=:viridis, title="poisson_matrix")
