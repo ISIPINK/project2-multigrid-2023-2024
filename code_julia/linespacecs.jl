@@ -30,7 +30,8 @@ end
 
 let
     using Plots
-    z, m = linspacecs(0, 1, 100, π / 6)
-    p = plot(real(z), imag(z), title="ECS grid", label="grid points", seriestype=:scatter)
+    z, m = linspacecs(0, 1, 17, π / 6)
+    p = plot(real(z), imag(z), title="ECS grid", label="grid points", seriestype=:scatter, marker=:x)
+    plot!(real(z), imag(z), label="line", linewidth=1, color=:blue)
     display(p)
 end

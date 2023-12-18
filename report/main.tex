@@ -47,4 +47,30 @@ style=alphabetic,
 \date{\today}
 \maketitle
 
+
+\section{Exterior Complex Scaling (ECS) boundary conditions}
+\subsection{Equivalence of complex grid and complex wave number}
+
+For homogenous the discretized Helmholtz equation ECS is equivalent to
+complex wave number. Let $h$ be normal "real" grid spacing and $\tilde{h} = z h, z \in \mathbb{C} $
+be the complex grid spacing.
+Let $\sigma$ be normal real wave number and $\tilde{\sigma} = z^{2} \sigma$ be the complex wave number.
+Let $u$ be the solution to the discretized Helmholtz equation with complex wave number on a normal grid
+and $\tilde{u}$ be the solution to the discretized Helmholtz equation on the complex grid.
+
+\begin{align}
+    \frac{\tilde{u}(\tilde{x}-\tilde{h}) -2 \tilde{u}(\tilde{x}) + \tilde{u}(\tilde{x} - \tilde{h})}{\tilde{h}^2} + \sigma \tilde{u} & = 0  \Leftrightarrow \\
+    \frac{\tilde{u}(\tilde{x}-zh) -2 \tilde{u}(\tilde{x}) + \tilde{u}(\tilde{x} - zh)}{z^{2}h^2} + \sigma \tilde{u}                  & = 0  \Leftrightarrow \\
+    \frac{u(x-h) -2 u(x) + u(x - h)}{h^2} + z^{2} \sigma u                                                                           & = 0  \Leftrightarrow \\
+    \frac{u(x-h) -2 u(x) + u(x - h)}{h^2} + \tilde{\sigma} u                                                                         & = 0
+\end{align}
+
+It choosing $z \sim e^{i \frac{\pi}{6} }$ is equivalent to choosing $\beta = 0.5$ because of the squaring.
+This equivalence doesn't hold when there is a source term.
+\subsection{ non uniform helmhotz matrix}
+
+$$
+    (\Delta_{h}u)_{i} = \left( \frac{u_{i+1} - u_{i}}{h_{i+1/2}} - \frac{u_{i} - u_{i-1}}{h_{i-1/2}} \right) \frac{2}{h_{i+1/2} +h_{i-1/2}}
+$$
+
 \end{document}
