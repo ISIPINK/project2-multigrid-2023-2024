@@ -1,3 +1,4 @@
+using Plots
 """
     linspacecs(a, b, n, ecsangle)
 
@@ -27,9 +28,7 @@ function linspacecs(a, b, n, ecsangle)
     return z, m
 end
 
-
-let
-    using Plots
+function test_linespacecs()
     z, m = linspacecs(0, 1, 17, π / 6)
     p = plot(real(z), imag(z), title="ECS grid", label="grid points", seriestype=:scatter, marker=:x)
     plot!(real(z), imag(z), label="line", linewidth=1, color=:blue)

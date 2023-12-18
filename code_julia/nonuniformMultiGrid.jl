@@ -1,5 +1,5 @@
-
 using SparseArrays, LinearAlgebra
+include("grid_constructions2D.jl")
 
 function wjacobi_short(A, f, u, omega)
     Dinv = spdiagm(0 => 1 ./ diag(A))
