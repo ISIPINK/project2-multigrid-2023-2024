@@ -5,19 +5,25 @@ include("constructions2D.jl")
 begin
     n = 10
     σ = 600
+    ngrid = 4
+    grid_points = vcat(range(-1, -1 / ngrid, length=2 * ngrid), range(0, 1, length=ngrid))
     H = helmholtz2D(n, σ)
+    sigmas = σ * ones((length(grid_points) - 2)^2)
+    Hgrid = helmholtz2D(grid_points, sigmas)
     R = simple_restrict_matrix2D(n)
     P = simple_interpolate_matrix2D(n)
-    mats = [H, R, P]
-    titles = ["H", "R", "P"]
+    mats = [H, Hgrid, R, P]
+    titles = ["H", "Hgrid", "R", "P"]
 
     for (mat, title) in zip(mats, titles)
         p = heatmap(mat, color=:viridis, title=title)
         display(p)
     end
+    x_coords = repeat(grid_points, length(grid_points))
+    y_coords = reshape(repeat(grid_points', length(grid_points)), :, 1)
+    scatter(x_coords, y_coords, label="2D grid", seriestype=:scatter, marker=:x)
 
 end
-
 
 begin
     n = 10

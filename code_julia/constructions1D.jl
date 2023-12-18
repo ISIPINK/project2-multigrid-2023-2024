@@ -7,7 +7,7 @@ function helmholtz1D(n, sigma)
     return A + sigma * I
 end
 
-function Poisson1D(grid)
+function Poisson1D(grid::Array)
     h = diff(grid)
     hm = @view h[1:end-1]
     hp = @view h[2:end]

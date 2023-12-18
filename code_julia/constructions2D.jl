@@ -1,10 +1,29 @@
 using SparseArrays, LinearAlgebra
 include("constructions1D.jl")
 
-function helmholtz2D(n, σ)
+function helmholtz2D(n::Int, σ)
     A_1D = n^2 * spdiagm(-1 => -ones(n - 2), 0 => 2 * ones(n - 1), 1 => -ones(n - 2))
     A_2D = kron(sparse(I, n - 1, n - 1), A_1D) .+ kron(A_1D, sparse(I, n - 1, n - 1))
     return A_2D .+ σ * sparse(I, (n - 1)^2, (n - 1)^2)
+end
+
+"""
+    helmholtz2D(grid::Array, σ::Array)
+
+Construct a 2D Helmholtz operator using a given grid and wavenumbers.
+
+# Arguments
+- `grid::Array`: An array of grid points.
+- `σ::Array`: An array of wavenumbers for the diagonal.
+
+# Returns
+- A 2D Helmholtz matrix.
+"""
+function helmholtz2D(grid::Array, σ::Array)
+    A_1D = Poisson1D(grid)
+    k = length(grid) - 2
+    A_2D = kron(sparse(I, k, k), A_1D) .+ kron(A_1D, sparse(I, k, k))
+    return A_2D .+ σ
 end
 
 function simple_restrict_matrix2D(n)
