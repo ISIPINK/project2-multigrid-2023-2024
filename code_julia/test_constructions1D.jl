@@ -6,14 +6,17 @@ include("grid_constructions1D.jl")
 begin
     n = 10
     σ = 600
+    ngrid = 4
+    grid_points = vcat(range(-1, -1 / ngrid, length=2 * ngrid), range(0, 1, length=ngrid))
     H = helmholtz1D(n, σ)
     Rw = Romega(n, σ, 2 / 3)
     R = simple_restrict_matrix(n)
     P = simple_interpolate_matrix(n)
-    pois1 = Poisson1D(range(-1, 1, length=n))
+    Pgrid = interpolate_matrix(grid_points)
+    pois1 = Poisson1D(grid_points)
     pois2 = Poisson1D([0, 1, 2, 4])
-    mats = [H, Rw, R, P, pois1, pois2]
-    titles = ["H", "Rw", "R", "P", "pois1", "pois2"]
+    mats = [H, Rw, R, P, Pgrid, pois1, pois2]
+    titles = ["H", "Rw", "R", "P", "Pgrid", "pois1", "pois2"]
 
     for (mat, title) in zip(mats, titles)
         p = heatmap(mat, color=:viridis, title=title)
@@ -53,3 +56,28 @@ begin
     # plot(diff(grid_points))
     # heatmap(poisson_matrix, color=:viridis, title="poisson_matrix")
 end
+
+begin
+    num_points = 1 * 10^1
+    fine_grid = vcat(range(-1, -0.5 - 1 / num_points, length=3 * num_points), range(-0.5, 1, length=num_points - 1))
+    fine_grid = fine_grid[2:end-1]
+    coarse_grid = fine_grid[2:2:end]
+    f(x) = sin((x + 1) * pi)
+
+    function_values = f.(fine_grid)
+    coarse_f = f.(coarse_grid)
+    P = interpolate_matrix(fine_grid)
+    R = restrict_matrix(fine_grid)
+    println(size(P))
+    println(size(coarse_f))
+    inter_f = P * coarse_f
+    restrict_f = R * function_values
+    println(size(inter_f))
+    plot(fine_grid, function_values, label="fine", color=:blue, linestyle=:solid, marker=:circle)
+    plot!(coarse_grid, coarse_f, label="coarse", color=:red, linestyle=:dash, marker=:square)
+    plot!(coarse_grid, restrict_f, label="restrict", color=:green, linestyle=:dot, marker=:diamond)
+    plot!(fine_grid, inter_f, label="interpolate", color=:purple, linestyle=:dashdot, marker=:cross)
+
+end
+
+

@@ -12,3 +12,40 @@ function Poisson1D(grid::AbstractArray)
 
     return spdiagm(-1 => diag_lower, 0 => diag_main, 1 => diag_upper)
 end
+
+function interpolate_matrix(finegrid::AbstractArray)
+    n = (length(finegrid) + 1) ÷ 2
+    P = spzeros(2 * n - 1, n - 1)
+    h = diff(finegrid)
+
+    for j in 1:n-1
+        hm = h[j]
+        hp = h[j+1]
+        h_avg = hm + hp
+
+        P[2*j-1, j] = hm / h_avg
+        P[2*j, j] = 1
+        P[2*j+1, j] = hp / h_avg
+    end
+
+    return P
+end
+
+function restrict_matrix(finegrid::AbstractArray)
+    P = interpolate_matrix(finegrid)
+    R = transpose(P)
+    return 0.5 * R
+end
+
+function simple_restrict_matrix(grid::AbstractArray)
+    if n % 2 != 0
+        error("restrict matrix needs n even")
+    end
+    R = spzeros(n ÷ 2 - 1, n - 1)
+    row0 = [1, 2, 1] / 4
+    # need to check indexing
+    for i in 1:size(R, 1)
+        R[i, 2*i-1:2*i+1] = row0
+    end
+    return R
+end
