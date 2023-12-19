@@ -1,6 +1,6 @@
 using SparseArrays, LinearAlgebra
-include(constuctors1D.jl)
-include(constuctors2D.jl)
+include("constructions1D.jl")
+include("constructions2D.jl")
 
 function get_n(v, dimensions)
     return Int(floor(length(v)^(1 / dimensions))) + 1

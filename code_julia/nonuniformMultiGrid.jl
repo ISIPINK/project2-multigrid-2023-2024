@@ -20,7 +20,7 @@ end
 
 function nonUniformVcycle2D(; grid, A, f, u, nu1, nu2, recursion_depth)
 
-    if n <= 3 || recursion_depth == 0
+    if length(grid) <= 5 || recursion_depth == 0
         return A \ f
     end
 
@@ -32,7 +32,7 @@ function nonUniformVcycle2D(; grid, A, f, u, nu1, nu2, recursion_depth)
     r_coarse = R * (f - A * u)
 
     e_coarse = nonUniformVcycle2D(
-        grid=grid[2:2:end],
+        grid=grid[2:2:end], # maybe the grid
         A=R * A * P, #galerkin property
         f=r_coarse,
         u=zero(r_coarse),
