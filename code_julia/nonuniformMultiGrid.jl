@@ -27,8 +27,8 @@ function nonUniformVcycle2D(; grid, A, f, u, nu1, nu2, recursion_depth)
     for _ in 1:nu1
         u = wjacobi(A, f, u, 2 / 3)
     end
-    R = restrict_matrix2D(grid)
-    P = interpolate_matrix2D(grid)
+    R = restrict_matrix2D(real(grid))
+    P = interpolate_matrix2D(real(grid))
     r_coarse = R * (f - A * u)
 
     e_coarse = nonUniformVcycle2D(
