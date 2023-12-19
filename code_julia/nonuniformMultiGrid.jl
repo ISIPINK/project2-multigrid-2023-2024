@@ -29,11 +29,11 @@ function nonUniformVcycle2D(; grid, A, f, u, nu1, nu2, recursion_depth)
     end
     R = restrict_matrix2D(grid)
     P = interpolate_matrix2D(grid)
-
     r_coarse = R * (f - A * u)
+
     e_coarse = nonUniformVcycle2D(
         grid=grid[2:2:end],
-        A=P * A * R, #galerkin property
+        A=R * A * P, #galerkin property
         f=r_coarse,
         u=zero(r_coarse),
         nu1=nu1,

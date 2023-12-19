@@ -50,7 +50,7 @@ begin
     plot!(grid_points, function_values, label="function_values")
     plot!(grid_points, second_derivative_values, label="second_derivative_values")
 
-    poisson_matrix = Poisson1D(grid_points)
+    poisson_matrix = -Poisson1D(grid_points)
     approx_second_derivative_values = poisson_matrix * function_values
     plot!(grid_points, approx_second_derivative_values, label="approx_second_derivative_values")
     # println(approx_second_derivative_values)
@@ -59,11 +59,11 @@ begin
 end
 
 begin
-    num_points = 1 * 10^1
+    num_points = 2 * 10^1
     fine_grid = vcat(range(-1, -0.5 - 1 / num_points, length=3 * num_points), range(-0.5, 1, length=num_points - 1))
     fine_grid = fine_grid[2:end-1]
     coarse_grid = fine_grid[2:2:end]
-    f(x) = sin((x + 1) * pi)
+    f(x) = sin(2(x + 1) * pi)
 
     function_values = f.(fine_grid)
     coarse_f = f.(coarse_grid)

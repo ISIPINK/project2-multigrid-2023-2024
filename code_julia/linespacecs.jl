@@ -30,7 +30,25 @@ end
 
 function test_linespacecs()
     z, m = linspacecs(0, 1, 17, π / 6)
+    zz = z[2:2:end]
+    p = plot(real(z), imag(z), title="ECS grid", label="grid points", seriestype=:scatter, marker=:x)
+    plot!(p, real(zz), imag(zz) .+ 0.1, label="grid points half", seriestype=:scatter, marker=:x)
+    plot!(p, real(z), imag(z), label="line", linewidth=1, color=:blue)
+
+    # Mark -0.5 and 1.5 on the plot
+    scatter!([-0.5, 1.5], [0, 0], color=:red, marker=:circle, label="marked points")
+
+    display(p)
+end
+
+function test_linespacecs_even()
+    z, m = linspacecs(0, 1, 17, π / 6)
+    z = z[2:2:end]
     p = plot(real(z), imag(z), title="ECS grid", label="grid points", seriestype=:scatter, marker=:x)
     plot!(real(z), imag(z), label="line", linewidth=1, color=:blue)
+
+    # Mark -0.5 and 1.5 on the plot
+    scatter!([-0.5, 1.5], [0, 0], color=:red, marker=:circle, label="marked points")
+
     display(p)
 end
