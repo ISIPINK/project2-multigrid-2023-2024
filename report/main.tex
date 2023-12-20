@@ -48,8 +48,8 @@ style=alphabetic,
 \maketitle
 
 
-\section{Exterior Complex Scaling (ECS) boundary conditions}
-\subsection{Equivalence of complex grid and complex wave number}
+\section{Implementation of Exterior Complex Scaling (ECS) Boundary Conditions}
+\subsection{Equivalence Between Complex Grid and Complex Wave Number}
 
 For homogenous the discretized Helmholtz equation ECS is equivalent to
 complex wave number. Let $h$ be normal "real" grid spacing and $\tilde{h} = z h, z \in \mathbb{C} $
@@ -67,27 +67,27 @@ and $\tilde{u}$ be the solution to the discretized Helmholtz equation on the com
 
 This equivalence doesn't hold when there is a source term.
 
-\subsection{ non uniform helmhotz matrix}
+\section{Non-Uniform Helmholtz Matrix Implementation}
 Our implementation of the non-uniform of the helmholtz equation uses at its base:
 $$
     (\Delta_{h}u)_{i} = -\left( \frac{u_{i+1} - u_{i}}{h_{i+1/2}} - \frac{u_{i} - u_{i-1}}{h_{i-1/2}} \right) \frac{2}{h_{i+1/2} +h_{i-1/2}}
     .
 $$
 
-\subsection{interpolation matrix}
+\subsection{Interpolation Matrix Construction}
 
 The interpolation matrix is based on linear interpolation on a irregular grid, we only use
 the real part of the complex grid to do interpolation. The restriction operation is defined
 through the variational property.
 
-\subsection{Test Problem}
+\section{Validation of V-cycle Implementation with Test Problem}
 
-We test our implementation of the vcycle on a point source problem with $\sigma = -10$.
+We test our implementation of the V-cycle on a point source problem with $\sigma = -10$.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/Vcycle_Test_Problem.pdf}
-    \caption{Convergence of the Vcycle for the test problem.}
+    \caption{Convergence of the V-cycle for the test problem, demonstrating that the algorithm has been implemented correctly.}
     \label{fig:../plots/Vcycle_Test_Problem.pdf}
 \end{figure}
 
@@ -98,71 +98,75 @@ We test our implementation of the vcycle on a point source problem with $\sigma 
     \label{fig:Solution_Test_Problem}
 \end{figure}
 
-\section{Double Slit Experiment}
-\subsection{divergence of multigrid 2 slit}
+\section{Simulation of Double Slit Experiment}
+\subsection{Normal Wavenumber}
 
-In previous project we studied divergence of the helmholtz equation with homogeneous wavenumber.
-Making the wavenumber inhomogeneous doesn't change the divergence of the multigrid method.
+In our previous project, we examined the divergence of the Helmholtz equation with a homogeneous wavenumber.
+It is not unexpected that introducing inhomogeneity to the wavenumber does not alter the divergence behavior
+of the multigrid method.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/Convergence_of_V-cycles_on_the_2-Slit_Problem.pdf}
-    \caption{convergence vcycles}
-    \label{fig:../plots/Convergence_of_V-cycles_on_the_2-Slit_Problem.pdf}
+    \caption{Divergence of V-cycles on the 2-Slit Problem.}
+    \label{fig:Convergence_of_V-cycles_on_the_2-Slit_Problem}
 \end{figure}
 
-\subsection{analysis of ECS Poisson Operator}
-Adding ECS to the Poisson operator  make some eigenvalues complex but this doen't explain divergent behavior
-of multigrid. What would explain the divergence are the spectral properties of the Helmholtz operator.
+\subsection{Spectral Analysis of ECS Poisson Operator}
+Adding ECS to the Poisson operator makes some eigenvalues complex, but this doesn't explain the
+divergent behavior of multigrid. The divergence can be explained by the spectral properties of the Helmholtz
+operator.
 
-\subsection{convergence of shifted multigrid 2 slit}
-As in project 1 adding a complex shift helps multigrid converge.
+\subsection{Shifted Wavenumber}
+Similar to Project 1, adding a complex shift makes multigrid converge.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/Vcycles_shifted2slit.pdf}
-    \caption{convergence vcycles shifted}
+    \caption{Convergence of V-cycles with shifted wavenumber.}
     \label{fig:../plots/Vcycles_shifted2slit.pdf}
 \end{figure}
 
-\subsection{preconditioned GMRES}
-The shifted problem can be used as a preconditioner to the non-shifted problem.
+\subsection{Preconditioned GMRES}
+The shifted problem can serve as a preconditioner for the non-shifted problem.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/GMRES2slit.pdf}
-    \caption{convergence preconditioned GMRES}
+    \caption{Convergence of Preconditioned GMRES}
     \label{fig:../plots/GMRES2slit.pdf}
 \end{figure}
 
-\section{Wi-Fi signals at home}
+\section{Simulation of Wi-Fi Signal Propagation at Home}
 
-\subsection{wavenumber and source}
-We used github copilot to construct the wavenumber and the source representing the house.
+\subsection{Construction of Wavenumber and Source Representation}
+We utilized GitHub Copilot to construct the wavenumber and the source, which represents the house.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/wifi_setup.pdf}
-    \caption{setup for wifi problem}
+    \caption{Setup for the Wi-Fi Signal Simulation Problem}
     \label{fig:../plots/wifi_setup.pdf}
 \end{figure}
 
-\subsection{preconditioned gmres}
-This is analogous to the 2 slit problem, we use the shifted problem as a preconditioner to the non-shifted problem.
-GMRES takes longer to converge because of worse behaving wavenumber.
+\subsection{Preconditioned GMRES for Wi-Fi Signal Simulation}
+
+This is analogous to the 2-slit problem, where we use the shifted problem as a
+preconditioner for the non-shifted problem. The convergence of GMRES takes
+longer due to the more challenging behavior of the wavenumber.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/gmres_wifi.pdf}
-    \caption{convergence plot}
+    \caption{Convergence of Preconditioned GMRES }
     \label{fig:../plots/gmres_wifi.pdf}
 \end{figure}
 
-Here we plot the computed solution to the wifi problem.
+Below, we present the computed solution to the Wi-Fi problem.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../plots/gmres_wifi_solution.pdf}
-    \caption{solution wifi}
-    \label{fig:../plots/gmres_wifi_solution.pdf}
+    \caption{Computed Solution for the Wi-Fi Problem}
+    \label{fig:gmres_wifi_solution}
 \end{figure}
 
 
