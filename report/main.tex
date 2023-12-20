@@ -67,7 +67,7 @@ and $\tilde{u}$ be the solution to the discretized Helmholtz equation on the com
 
 This equivalence doesn't hold when there is a source term.
 
-\section{Non-Uniform Helmholtz Matrix Implementation}
+\subsection{Non-Uniform Helmholtz Matrix Implementation}
 Our implementation of the non-uniform of the helmholtz equation uses at its base:
 $$
     (\Delta_{h}u)_{i} = -\left( \frac{u_{i+1} - u_{i}}{h_{i+1/2}} - \frac{u_{i} - u_{i-1}}{h_{i-1/2}} \right) \frac{2}{h_{i+1/2} +h_{i-1/2}}
@@ -80,7 +80,7 @@ The interpolation matrix is based on linear interpolation on a irregular grid, w
 the real part of the complex grid to do interpolation. The restriction operation is defined
 through the variational property.
 
-\section{Validation of V-cycle Implementation with Test Problem}
+\subsection{Validation of V-cycle Implementation with Test Problem}
 
 We test our implementation of the V-cycle on a point source problem with $\sigma = -10$.
 
